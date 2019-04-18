@@ -66,3 +66,22 @@ Nomad also provides a feature called federation, which enables the option of con
 ### Service Discovery
 
 ![Service Discovery Mesh](assets/service-discovery.png)
+
+Beside Nomad, Consul is also an essential part of the system and gives the answer to two important questions:
+
+ 1. How do the Nomad server nodes find each other, and how do they know about the state and location of the client nodes?
+ 2. How can services find other services they will be need to communicate with?
+
+The issue of the lack of service discovery is solved by implementing Consul. Consul knows the current health status and the location (IP and port, etc) of all registered services.
+
+Just like Nomad, Consul is a single binary that can be ran in either server or client mode. The Consul agent in **server mode** is deployed to instances which are then transformed into the server nodes. In the architectural overview image, these nodes are marked with the purple consul icon. For fault tolerance at least three consul server nodes are deployed. They elect (like nomad does) a leader, that manages all cluster calls and decisions.
+
+**Consul in client mode** runs on the remaining instances, which are the nomad server and nomad client nodes. Instead of contacting the consul server, each component directly communicates with the client that is locally available on each node. This removes the need to find out the actual location of the consul server.
+
+Nomad and Consul are perfectly integrated, therefore the nomad nodes are able to find each other automatically using consul. Each node, either server or client, registers itself with consul then reports its health status. The nomad nodes are then promoted through the consul API as available nomad client or nomad service.
+
+The same feature is applied for the jobs management by nomad. Nomad automatically registers a deployed job at consul. Thus all deployed services can be found by querying the consul API, which then returns the concrete IP, port and health status of the specific service.
+
+This implies that each service has to implement code that queries the consul API. To avoid this effort there are components that can be used instead, like the load balancer [fabio](https://fabiolb.net/) or [envoy](https://www.envoyproxy.io/) which creates a service mesh.
+
+To ease up the first setup, fabio will be used. Envoy will be introduced instead in an upcoming paper as it is a better solution for our purpose.
