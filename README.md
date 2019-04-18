@@ -61,3 +61,8 @@ At least three instances (a cluster quorum) with the Nomad binary in **server mo
 Instances with the nomad binary in **client mode**, will be the nodes where the actual jobs are deployed and ran. In the image above these nodes are indicated by the smaller boxes.
 
 Nomad also provides a feature called federation, which enables the option of connecting different Nomad clusters. Having this implemented the system can orchestrate and manage services across multiple data centers, which even can be hosted by different cloud providers. Indicated by the bold purple line in the architecural diagram, the Nomad leader of _Data-Center A (aka, us-east-1)_ communicates with the leader in _Data-Center Bn (aka, us-east-2)_ using [Serf](https://www.serf.io/) (A lightweight gossip protocol).
+
+
+### Service Discovery
+
+![Service Discovery Mesh](assets/service-discovery.png)
