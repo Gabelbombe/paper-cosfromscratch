@@ -120,4 +120,42 @@ Once you have an account, you will need to create AWS access keys using the AWS 
  2. Create a new user for your account, by following this [tutorial](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).
  3. Create a new access key for this user, by following this [tutorial](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey).
 
-Once the above steps are complete, don’t forget to actually download your keys. This is the only time you can do this, so if you loose your keys you have to create a new one following the same steps.
+Once the above steps are complete, don’t forget to actually download your keys. This is the only time you can do this, so if you loose your keys you have to create a new keys following the same steps.
+
+![Download your credentials](assets/aws-credentials.png)
+
+The downloaded file `accessKeys.csv` contains the `Access key ID` and the `Secret access key`.
+
+Now that you have your keys, you can create an AWS profile. A profile in this context is just a name referencing access keys and some options for the AWS account in use. In order to use these, you'll have to create or modify the file `~/.aws/credentials`.
+
+In this file, just add a new section named `my_cos_account` pasting in the `Access key ID`, the `Secret access key` and save the file.
+
+```ini
+[my_cos_account]
+aws_access_key_id = PASTE HERE YOUR ACCESS KEY
+aws_secret_access_key = PASTE HERE YOUR SECRET KEY
+```
+
+Now with your `my_cos_account` profile, you can use it to directly create the AWS resources that are needed to build up the COS.
+
+
+#### Tools
+
+Before we can really start to deploy the COS we'll have to install some essential tools.
+
+**Terraform:** Is needed to create AWS resources. Here version **0.11.11** was used.
+
+ - Download the binary from [Terraform Downloads](https://www.terraform.io/downloads.html).
+ - Unzip and install it.
+
+```bash
+cd ~/Downloads
+unzip terraform_0.11.11_linux_amd64.zip
+sudo mkdir -p /opt/terraform/0.11.11
+sudo mv terraform /opt/terraform/0.11.11
+
+cd /usr/bin
+sudo ln -s /opt/terraform/0.11.11/terraform terraform
+```
+
+ - Test it with `terraform --version`
