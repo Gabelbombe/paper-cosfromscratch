@@ -101,3 +101,23 @@ This scenario is illustrated in the image above. Here the client requests a serv
 Now that we have outlined the technologies, lets roll out the big guns and start assembling the pieces to put our Container Orchestration System into action. As a note, all steps I will outline and scripts used here have been tested with an Ubuntu 16.04, but should also work on other linux based systems with minor tweaks and massages.
 
 ![Our Container Orchestration System](assets/cos-outline.png)
+
+
+### Prerequisites
+
+Before you can start with the rollout of the COS you need an AWS account, as well as the installation tools mentioned below.
+
+
+#### AWS Account and Credentials Profile
+
+Feel free to skip this account setup section if you already own or manage an AWS account.
+
+The COS code is written in Terraform using the AWS services provider. You will need an AWS account to be able to deploy this system. To create a new account, just have to follow the tutorial: [Create and Activate an AWS Account](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/).
+
+Once you have an account, you will need to create AWS access keys using the AWS Web console:
+
+ 1. Login into your new AWS account.
+ 2. Create a new user for your account, by following this [tutorial](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).
+ 3. Create a new access key for this user, by following this [tutorial](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey).
+
+Once the above steps are complete, don’t forget to actually download your keys. This is the only time you can do this, so if you loose your keys you have to create a new one following the same steps.
