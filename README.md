@@ -44,3 +44,8 @@ To summarize - the most useful features that brought me to Nomad are:
  - **Cloud Provider Agnostic:** Hybrid as well as multi-IaaS provider setup is possible.
  - **Extensibility:** Well thought out integration with other Hashicorp tools, to implement missing feature sets.
  - **Deployment:** Supports known deployment design patterns, such as rolling, canary and blue green.
+
+
+### Architectural Overview
+
+![Architectural Component Overview](assets/arch-overview.png)
