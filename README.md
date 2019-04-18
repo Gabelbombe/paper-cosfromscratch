@@ -193,3 +193,11 @@ sudo ln -s /opt/packer/1.3.3/packer packer
 ```
 
  - Test it with `packer --version`
+
+
+### Deployment
+
+The whole setup consists of terraform code and is available at [Terraform: A Container Orchestration System](https://github.com/ehime/terraform-cos).
+This project is designed as a Terraform module with a tailored API. It can be directly integrated into an existing infrastructure adding in a Container Orchestration System.
+
+Additionally this project provides a self contained `root-example`, that deploys beside the COS with minimal networking infrastructure. This example will be used here to roll out the system.
