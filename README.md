@@ -49,3 +49,11 @@ To summarize - the most useful features that brought me to Nomad are:
 ### Architectural Overview
 
 ![Architectural Component Overview](assets/arch-overview.png)
+
+The core of our system  then will be Nomad. Nomad is able to deploy and manage services/applications on a fleet of compute instances (client nodes).
+
+Nomad manages these in from a templating systems called [Nomad jobs](https://www.nomadproject.io/docs/job-specification/index.html). A **Nomad job** is either a single task or a group of tasks which, as said, can be a container (docker or rocket), a raw binary executable, a jar file or even a bash script. Such a job represents all the things that have to be deployed tightly together on the same client node.
+
+Nomad itself is shipped as a simple binary that provides a server and a client mode. This binary is deployed on some type of compute instances (i.e AWS EC2) thus transforming these instances to Nomad server or client nodes.
+
+At least three instances (a cluster quorum) with the Nomad binary in server mode per data center are used. This implementation leasds to a fault tolerant Nomad cluster across multiple availability zones. In the image above they are marked with the green Nomad logos. Using the [raft protocol](https://raft.github.io/) the server nodes elect a Nomad leader. The leader is then responsible management of all cluster calls and decisions.
