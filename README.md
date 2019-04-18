@@ -67,7 +67,7 @@ Nomad also provides a feature called federation, which enables the option of con
 
 ![Service Discovery Mesh](assets/service-discovery.png)
 
-Beside Nomad, Consul is also an essential part of the system and gives the answer to two important questions:
+Beside Nomad, Consul will also be an essential part of our system, which gives the answer to two important questions:
 
  1. How do the Nomad server nodes find each other, and how do they know about the state and location of the client nodes?
  2. How can services find other services they will be need to communicate with?
