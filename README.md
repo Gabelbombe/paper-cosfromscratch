@@ -27,6 +27,11 @@ These problems have vanished with AWS EKS, but since this service is relatively 
 
 ### Nomad as Core Component
 
-After looking at the mentioned Container Orchestration Systems there is one I would like to single out, this is another product by HashiCorp called [Nomad](https://www.nomadproject.io/). Nomad is a scheduler of applications and services no more, no less. Nomad can't, or should it compete with the feature sets provided by kubernetes or DC/OS. All the important features for managing and running services are available. It does _just_ one job but does it extremely well.
+After looking at the mentioned Container Orchestration Systems there is one I would like to focus on, this is other product called [Nomad](https://www.nomadproject.io/). **Nomad is a scheduler of applications and services no more, no less.** Nomad can't, or should it compete with the feature sets provided by kubernetes or DC/OS. All the important features for managing and running services are available. It does _just_ one job but does it extremely well.
 
 Other features like service discovery, load balancing, secret management, monitoring and logging are available open source and can be folded in easily to expand its capabilities.
+
+Nomad is developed by [Hashicorp](https://www.hashicorp.com/), a company who's mantra is _Consistent workflows to provision, secure, connect, and run any infrastructure for any application._.
+
+
+Having the bigger picture in mind, the Hashicorp engineers know exactly what the important components are, and how to implement these tools in a robust suite. Besides Nomad, they provide [Consul](https://www.consul.io/) (A Service Discovery and Connectivity tool), [Vault](https://www.hashicorp.com/products/vault/) (A Secrets as a Service tool) and [Terraform]() (An Infrastructure provisioning tool). All of them integrate with Nomad, layering in the missing features, such as service discovery to the Container Orchestration System to be set up.
