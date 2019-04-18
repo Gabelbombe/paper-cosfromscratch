@@ -159,3 +159,37 @@ sudo ln -s /opt/terraform/0.11.11/terraform terraform
 ```
 
  - Test it with `terraform --version`
+
+**Nomad (CLI):** Is also needed to be able to deploy services into the COS and show the status of the COS. Here version **0.8.6** was used.
+
+ - Download the binary from [Nomad Downloads](https://www.nomadproject.io/downloads.html)
+ - Unzip and install it.
+
+```bash
+cd ~/Downloads
+unzip nomad_0.8.6_linux_amd64.zip
+sudo mkdir -p /opt/nomad/0.8.6
+sudo mv nomad /opt/nomad/0.8.6
+
+cd /usr/bin
+sudo ln -s /opt/nomad/0.8.6/nomad nomad
+```
+
+ - Test it with `nomad --version`
+
+**Packer:** Is needed to bake (create) the AWS AMI that contains the nomad binary, which is then actually used as image for the AWS EC2 instances that form the COS. Here version **1.3.3** was used.
+
+ - Download the binary from [Packer Downloads](https://www.packer.io/downloads.html)
+ - Unzip and install it.
+
+```bash
+cd ~/Downloads
+unzip packer_1.3.3_linux_amd64.zip
+sudo mkdir -p /opt/packer/1.3.3
+sudo mv packer /opt/packer/1.3.3
+
+cd /usr/bin
+sudo ln -s /opt/packer/1.3.3/packer packer
+```
+
+ - Test it with `packer --version`
