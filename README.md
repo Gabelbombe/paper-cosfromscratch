@@ -94,3 +94,10 @@ To ease up the first setup, fabio will be used. Envoy will be introduced instead
 As mentioned, fabio will be used for now as our load balancer and ingress traffic controller. Fabio integrates well with consul by implementing and leveraging consuls native API. Internally fabio has knowledge of consuls service catalog and thus about the state and location of the services registered with consul. Based on this knowledge fabio adjusts IP rules and routing tables on the specific nomad client nodes, this enables requests to be routed to the correct targets. It even works if the requested job lives on another instance, since the routes are based on IP and port.
 
 This scenario is illustrated in the image above. Here the client requests a service represented by job A on nomad. After hitting the AWS ALB the request is routed to fabio, deployed as nomad job, which then forwards the request to job A. Either to the instance of job A on nomad client node 1 or 2.
+
+
+## Setting Up our Container Orchestration System
+
+Now that we have outlined the technologies, lets roll out the big guns and start assembling the pieces to put our Container Orchestration System into action. As a note, all steps I will outline and scripts used here have been tested with an Ubuntu 16.04, but should also work on other linux based systems with minor tweaks and massages.
+
+![Our Container Orchestration System](assets/cos-outline.png)
