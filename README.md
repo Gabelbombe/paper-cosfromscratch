@@ -31,7 +31,16 @@ After looking at the mentioned Container Orchestration Systems there is one I wo
 
 Other features like service discovery, load balancing, secret management, monitoring and logging are available open source and can be folded in easily to expand its capabilities.
 
-Nomad is developed by [Hashicorp](https://www.hashicorp.com/), a company who's mantra is _Consistent workflows to provision, secure, connect, and run any infrastructure for any application._.
+Nomad is developed by [Hashicorp](https://www.hashicorp.com/), a company who's mantra is _"Consistent workflows to provision, secure, connect, and run any infrastructure for any application."_.
 
 
 Having the bigger picture in mind, the Hashicorp engineers know exactly what the important components are, and how to implement these tools in a robust suite. Besides Nomad, they provide [Consul](https://www.consul.io/) (A Service Discovery and Connectivity tool), [Vault](https://www.hashicorp.com/products/vault/) (A Secrets as a Service tool) and [Terraform]() (An Infrastructure provisioning tool). All of them integrate with Nomad, layering in the missing features, such as service discovery to the Container Orchestration System to be set up.
+
+To summarize - the most useful features that brought me to Nomad are:
+
+ - **Complexity:** Nomad is easy to understand, therefore to set up and maintain.
+ - **Job Control:** Nomad is a highly scalable scheduler using an _evaluation_ approach.
+ - **Container/Task Support:** Docker, Rkt, simple binaries/executables and even bash scripts can be scheduled.
+ - **Cloud Provider Agnostic:** Hybrid as well as multi-IaaS provider setup is possible.
+ - **Extensibility:** Well thought out integration with other Hashicorp tools, to implement missing feature sets.
+ - **Deployment:** Supports known deployment design patterns, such as rolling, canary and blue green.
