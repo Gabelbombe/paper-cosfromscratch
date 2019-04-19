@@ -219,7 +219,7 @@ The following steps will be required:
 mkdir ~/example-cos/ && cd ~/example-cos/
 
 # Clone the code using tag v0.0.3
-git clone --branch v0.0.3 https://github.com/ehime/terraform-cos .
+git clone --branch v1.0.0 https://github.com/ehime/terraform-cos .
 ```
 
 
@@ -232,3 +232,34 @@ With this one AMI we will be able to have Instances that:
  - Have consul running in server mode with no nomad running. These are represent the **consul server nodes**.
  - Have consul running in client mode and nomad running in server mode. These are represent the **nomad server nodes**.
  - Have consul running in client mode and nomad running in client mode. These are represent the **nomad client nodes**.
+
+To build our AMI, first Packer will need to be supplied with our AWS credentials. As described at [Packer Authentication](https://www.packer.io/docs/builders/amazon.html#authentication) you can use static, environment variables or shared credentials.
+
+For now, I'll just be setting them in a shell by exporting the following parameters.
+
+```bash
+# AWS Environment Variables
+export AWS_ACCESS_KEY_ID=<your access key id>
+export AWS_SECRET_ACCESS_KEY=<your secret key>
+export AWS_DEFAULT_REGION=us-east-1
+```
+
+To build the AMI you just issue the following commands:
+
+```bash
+cd ~/example-cos/modules/ami2
+
+# build the ami
+packer build -var 'aws_region=us-east-1' -var 'ami_regions=us-east-1' nomad-consul-docker.json
+```
+
+You should get the following results which specifies the ID of the AMI created.
+
+```bash
+==> amazon-linux-ami2: Deleting temporary keypair...
+Build 'amazon-linux-ami2' finished.
+
+==> Builds finished. The artifacts of successful builds are:
+--> amazon-linux-ami2: AMIs were created:
+us-east-1: ami-1234567890xyz
+```
