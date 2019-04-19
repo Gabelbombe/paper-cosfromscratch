@@ -263,3 +263,11 @@ Build 'amazon-linux-ami2' finished.
 --> amazon-linux-ami2: AMIs were created:
 us-east-1: ami-1234567890xyz
 ```
+
+
+### Create an EC2 Instance Key Pair
+
+All instances of the COS will need to be accessed via ssh. So, during deployment an AWS instance key pair will be required.
+This key can be created with the the name `cos-playground` for this example.
+
+How to create a key pair is described at Creating a [Key Pair Using Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair).
