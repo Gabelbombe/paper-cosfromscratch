@@ -210,3 +210,25 @@ The following steps will be required:
  4. Deploy the infrastructure and the COS.
  5. Deploy fabio.
  6. Deploy a sample service.
+
+
+### Clone your Codebase
+
+```bash
+# Create work folder
+mkdir ~/example-cos/ && cd ~/example-cos/
+
+# Clone the code using tag v0.0.3
+git clone --branch v0.0.3 https://github.com/ehime/terraform-cos .
+```
+
+
+### Build your Machine Image
+
+You will need an instances of consul and nomad running in client and server mode running on a server. Luckily, both consul and nomad are shipped as binaries which can switch between these modes when called with different parameters. This leads to the situation where just one machine image will need to baked. This AMI will be our _Golden Image_ which contains both the Nomad and Consul binaries.
+
+With this one AMI we will be able to have Instances that:
+
+ - Have consul running in server mode with no nomad running. These are represent the **consul server nodes**.
+ - Have consul running in client mode and nomad running in server mode. These are represent the **nomad server nodes**.
+ - Have consul running in client mode and nomad running in client mode. These are represent the **nomad client nodes**.
