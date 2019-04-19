@@ -201,3 +201,12 @@ The whole setup consists of terraform code and is available at [Terraform: A Con
 This project is designed as a Terraform module with a tailored API. It can be directly integrated into an existing infrastructure adding in a Container Orchestration System.
 
 Additionally this project provides a self contained `root-example`, that deploys beside the COS with minimal networking infrastructure. This example will be used here to roll out the system.
+
+The following steps will be required:
+
+ 1. Obtain the source code from github.
+ 2. Build the Machine Image (AMI) for the EC2 instances.
+ 3. Create an EC2 instance key pair.
+ 4. Deploy the infrastructure and the COS.
+ 5. Deploy fabio.
+ 6. Deploy a sample service.
