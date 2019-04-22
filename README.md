@@ -250,7 +250,10 @@ To build the AMI you just issue the following commands:
 cd ~/example-cos/modules/ami2
 
 # build the ami
-packer build -var 'aws_region=us-east-1' -var 'ami_regions=us-east-1' nomad-consul-docker.json
+packer build \
+  -var 'aws_region=us-east-1'  \
+  -var 'ami_regions=us-east-1' \
+nomad-consul-docker.json
 ```
 
 You should get the following results which specifies the ID of the AMI created.
@@ -271,3 +274,38 @@ All instances of the COS will need to be accessed via ssh. So, during deployment
 This key can be created with the the name `cos-playground` for this example.
 
 How to create a key pair is described at Creating a [Key Pair Using Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair).
+
+
+### Deploy the COS
+
+For the deployment the `examples/root-example` will be used. It is self contained and builds not only the COS itself, but also the underlying networking infrastructure.
+
+In this step you need the id of the AMI that was previously created and the name of your AWS profile. In our example the AMI id is `ami-1234567890xyz` and the profile is named `my_cos_account`.
+
+
+```bash
+cd ~/example-cos/examples/root-example
+# Init terraform, download pugins and modules
+terraform init
+
+# generic terraform plan call
+# terraform plan -out cos.plan -var deploy_profile=<your profile name> -var nomad_ami_id_servers=<your ami-id> -var nomad_ami_id_clients=<your ami-id>
+terraform plan                                  \
+  -var 'deploy_profile=my_cos_account'          \
+  -var 'nomad_ami_id_servers=ami-1234567890xyz' \
+  -var 'nomad_ami_id_clients=ami-1234567890xyz' \
+  -out cos.plan
+
+# apply the planned changes, which means deploy the COS
+terraform apply cos.plan
+
+After successful deployment terraform prints some useful parameters to the terminal.
+
+![Successful Terraform Plan](assets/plan-success.png)
+
+These can be used to open the nomad UI `xdg-open "http://$(terraform output nomad_ui_alb_dns)"` or the consul UI `xdg-open "http://$(terraform output consul_ui_alb_dns)"` in your browser.
+
+
+![The Nomad UI](assets/nomad-ui.png)
+
+The image above shows the web UI of the empty, but running nomad cluster.
