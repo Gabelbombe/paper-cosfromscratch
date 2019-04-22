@@ -120,7 +120,7 @@ Once you have an account, you will need to create AWS access keys using the AWS 
  2. Create a new user for your account, by following this [tutorial](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html).
  3. Create a new access key for this user, by following this [tutorial](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey).
 
-Once the above steps are complete, don’t forget to actually download your keys. This is the only time you can do this, so if you loose your keys you have to create a new keys following the same steps.
+Once the above steps are complete, don't forget to actually download your keys. This is the only time you can do this, so if you loose your keys you have to create a new keys following the same steps.
 
 ![Download your credentials](assets/aws-credentials.png)
 
@@ -329,7 +329,7 @@ The nomad job description for deploying fabio is located at `examples/jobs/fabio
 
 ```hcl
 job "fabio" {
-  datacenters = ["public-services"]
+  datacenters = ["`public-services`"]
 
   type = "system"
   update {
@@ -367,7 +367,21 @@ job "fabio" {
 }
 ```
 
-With nomad run `examples/jobs/fabio.nomad`, fabio will be deployed to nomad to complete the COS setup.
+With nomad run `examples/jobs/fabio.nomad`, fabio will be deployed to nomad to complete the Container Orchestration System setup.
 To test if the deployment succeeded you can either open the fabio UI using `xdg-open "http://$(terraform output fabio_ui_alb_dns)"` or check the nomad UI.
 
 ![Fabio as the first Nomad Job](assets/fabio-jobs.png)
+
+In the image above, fabio running as nomad system job is shown. Thus the deployment was successful.
+
+### Deploy a Sample Service
+
+Also part of the Container Orchestration Sysgtems project at [Github](https://github.com/ehime/terraform-cos) is a nomad job description for deploying a sample service, the `ping-service`.
+
+The `ping-service` is a simple service for testing purposes. When you send a request to it's endpoint, the service tries to forward this request to other instances of the `ping-service`. This is done for a defined number of hops or "pings". For each hop a "ping" is added to the response. The last receiver in the chain stops forwarding and adds a "pong" to concatenated message list.
+
+So now lets deploy the `ping-service` and send a request against it.
+By calling nomad run `examples/jobs/ping_service.nomad` four instances of the `ping-service` will be deployed to the Container Orchestration System.
+Looking at consul one can see that beside, consul, nomad, nomad-clients and fabio also the `ping-service` is automatically registered by nomad. Thus the four deployed `ping-service` instances can be found via service discovery.
+
+Each instance of the service runs in one of the four data centers of the Container Orchestration System, in `public-services`, `private-services`, `content-connector` or `backoffice data center`. More details about the available data centers can be found at [Container Orchestration System Architecture](assets/cos-outline.png).
