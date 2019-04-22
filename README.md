@@ -96,7 +96,7 @@ As mentioned, fabio will be used for now as our load balancer and ingress traffi
 This scenario is illustrated in the image above. Here the client requests a service represented by job A on nomad. After hitting the AWS ALB the request is routed to fabio, deployed as nomad job, which then forwards the request to job A. Either to the instance of job A on nomad client node 1 or 2.
 
 
-## Setting Up our Container Orchestration System
+## Setting up our Container Orchestration System
 
 Now that we have outlined the technologies, lets roll out the big guns and start assembling the pieces to put our Container Orchestration System into action. As a note, all steps I will outline and scripts used here have been tested with an Ubuntu 16.04, but should also work on other linux based systems with minor tweaks and massages.
 
@@ -304,7 +304,6 @@ After successful deployment terraform prints some useful parameters to the termi
 ![Successful Terraform Plan](assets/plan-success.png)
 
 These can be used to open the nomad UI `xdg-open "http://$(terraform output nomad_ui_alb_dns)"` or the consul UI `xdg-open "http://$(terraform output consul_ui_alb_dns)"` in your browser.
-
 
 ![The Nomad UI](assets/nomad-ui.png)
 
