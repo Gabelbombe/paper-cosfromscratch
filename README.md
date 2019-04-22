@@ -60,7 +60,7 @@ At least three instances (a cluster quorum) with the Nomad binary in **server mo
 
 Instances with the nomad binary in **client mode**, will be the nodes where the actual jobs are deployed and ran. In the image above these nodes are indicated by the smaller boxes.
 
-Nomad also provides a feature called federation, which enables the option of connecting different Nomad clusters. Having this implemented the system can orchestrate and manage services across multiple data centers, which even can be hosted by different cloud providers. Indicated by the bold purple line in the architecural diagram, the Nomad leader of _Data-Center A (aka, us-east-1)_ communicates with the leader in _Data-Center B (aka, us-east-2)_ using [Serf](https://www.serf.io/) (A lightweight gossip protocol).
+Nomad also provides a feature called federation, which enables the option of connecting different Nomad clusters. Having this implemented the system can orchestrate and manage services across multiple data centers, which even can be hosted by different cloud providers. Indicated by the bold purple line in the architecural diagram, the Nomad leader of _Data-Center A (aka, eu-central-1)_ communicates with the leader in _Data-Center B (aka, us-east-2)_ using [Serf](https://www.serf.io/) (A lightweight gossip protocol).
 
 
 ### Service Discovery
@@ -235,13 +235,16 @@ With this one AMI we will be able to have Instances that:
 
 To build our AMI, first Packer will need to be supplied with our AWS credentials. As described at [Packer Authentication](https://www.packer.io/docs/builders/amazon.html#authentication) you can use static, environment variables or shared credentials.
 
+If you need a specicial user / permissions for Packer to have minimum impact you can use [this policy](https://gist.github.com/ehime/b945421fc49365c4f026d58c2c6a9e8d).
+
+
 For now, I'll just be setting them in a shell by exporting the following parameters.
 
 ```bash
 # AWS Environment Variables
 export AWS_ACCESS_KEY_ID=<your access key id>
 export AWS_SECRET_ACCESS_KEY=<your secret key>
-export AWS_DEFAULT_REGION=us-east-1
+export AWS_DEFAULT_REGION=eu-central-1
 ```
 
 To build the AMI you just issue the following commands:
@@ -250,9 +253,9 @@ To build the AMI you just issue the following commands:
 cd ~/example-cos/modules/ami2
 
 # build the ami
-packer build \
-  -var 'aws_region=us-east-1'  \
-  -var 'ami_regions=us-east-1' \
+packer build                      \
+  -var 'aws_region=eu-central-1'  \
+  -var 'ami_regions=eu-central-1' \
 nomad-consul-docker.json
 ```
 
@@ -264,7 +267,7 @@ Build 'amazon-linux-ami2' finished.
 
 ==> Builds finished. The artifacts of successful builds are:
 --> amazon-linux-ami2: AMIs were created:
-us-east-1: ami-1234567890xyz
+eu-central-1: ami-1234567890xyz
 ```
 
 
