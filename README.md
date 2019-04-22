@@ -285,6 +285,7 @@ In this step you need the id of the AMI that was previously created and the name
 
 ```bash
 cd ~/example-cos/examples/root-example
+
 # Init terraform, download pugins and modules
 terraform init
 
@@ -298,6 +299,7 @@ terraform plan                                  \
 
 # apply the planned changes, which means deploy the Container Orchestration System
 terraform apply cos.plan
+```
 
 After successful deployment terraform prints some useful parameters to the terminal.
 
