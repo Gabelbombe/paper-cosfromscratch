@@ -288,7 +288,7 @@ In this step you need the id of the AMI that was previously created and the name
 
 
 ```bash
-cd examples/root-example
+cd ../examples/root-example
 
 # Init terraform, download pugins and modules
 terraform init
