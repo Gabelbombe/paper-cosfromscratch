@@ -4,7 +4,7 @@ In this paper I will be explaining why HashiCorp Nomad is a chosen core componen
 
 Later I will show you how to set up the Container Orchestration System as it is I have outlined. The whole setup will be made using Terraform on an empty AWS account to ensure that it can be automated, reproduced and thus easily maintainable. The goal is to have a complete, [soup to nuts](https://en.wikipedia.org/wiki/Soup_to_nuts) platform where services can be deployed and managed easily.
 
-![Visualizing a CoS](assets/container-gateway.jpg)
+![Visualizing a Container Orchestration System](assets/container-gateway.jpg)
 
 
 ## What a Container Orchestration System could look like
@@ -105,14 +105,14 @@ Now that we have outlined the technologies, lets roll out the big guns and start
 
 ### Prerequisites
 
-Before you can start with the rollout of the COS you need an AWS account, as well as the installation tools mentioned below.
+Before you can start with the rollout of the Container Orchestration System you need an AWS account, as well as the installation tools mentioned below.
 
 
 #### AWS Account and Credentials Profile
 
 Feel free to skip this account setup section if you already own or manage an AWS account.
 
-The COS code is written in Terraform using the AWS services provider. You will need an AWS account to be able to deploy this system. To create a new account, just have to follow the tutorial: [Create and Activate an AWS Account](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/).
+The Container Orchestration System code is written in Terraform using the AWS services provider. You will need an AWS account to be able to deploy this system. To create a new account, just have to follow the tutorial: [Create and Activate an AWS Account](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/).
 
 Once you have an account, you will need to create AWS access keys using the AWS Web console:
 
@@ -136,12 +136,12 @@ aws_access_key_id = PASTE HERE YOUR ACCESS KEY
 aws_secret_access_key = PASTE HERE YOUR SECRET KEY
 ```
 
-Now with your `my_cos_account` profile, you can use it to directly create the AWS resources that are needed to build up the COS.
+Now with your `my_cos_account` profile, you can use it to directly create the AWS resources that are needed to build up the Container Orchestration System.
 
 
 #### Tools
 
-Before we can really start to deploy the COS we'll have to install some essential tools.
+Before we can really start to deploy the Container Orchestration System we'll have to install some essential tools.
 
 **Terraform:** Is needed to create AWS resources. Here version **0.11.11** was used.
 
@@ -160,7 +160,7 @@ sudo ln -s /opt/terraform/0.11.11/terraform terraform
 
  - Test it with `terraform --version`
 
-**Nomad (CLI):** Is also needed to be able to deploy services into the COS and show the status of the COS. Here version **0.8.6** was used.
+**Nomad (CLI):** Is also needed to be able to deploy services into the Container Orchestration System and show the status of the Container Orchestration System. Here version **0.8.6** was used.
 
  - Download the binary from [Nomad Downloads](https://www.nomadproject.io/downloads.html)
  - Unzip and install it.
@@ -177,7 +177,7 @@ sudo ln -s /opt/nomad/0.8.6/nomad nomad
 
  - Test it with `nomad --version`
 
-**Packer:** Is needed to bake (create) the AWS AMI that contains the nomad binary, which is then actually used as image for the AWS EC2 instances that form the COS. Here version **1.3.3** was used.
+**Packer:** Is needed to bake (create) the AWS AMI that contains the nomad binary, which is then actually used as image for the AWS EC2 instances that form the Container Orchestration System. Here version **1.3.3** was used.
 
  - Download the binary from [Packer Downloads](https://www.packer.io/downloads.html)
  - Unzip and install it.
@@ -200,14 +200,14 @@ sudo ln -s /opt/packer/1.3.3/packer packer
 The whole setup consists of terraform code and is available at [Terraform: A Container Orchestration System](https://github.com/ehime/terraform-cos).
 This project is designed as a Terraform module with a tailored API. It can be directly integrated into an existing infrastructure adding in a Container Orchestration System.
 
-Additionally this project provides a self contained `root-example`, that deploys beside the COS with minimal networking infrastructure. This example will be used here to roll out the system.
+Additionally this project provides a self contained `root-example`, that deploys beside the Container Orchestration System with minimal networking infrastructure. This example will be used here to roll out the system.
 
 The following steps will be required:
 
  1. Obtain the source code from github.
  2. Build the Machine Image (AMI) for the EC2 instances.
  3. Create an EC2 instance key pair.
- 4. Deploy the infrastructure and the COS.
+ 4. Deploy the infrastructure and the Container Orchestration System.
  5. Deploy fabio.
  6. Deploy a sample service.
 
@@ -270,15 +270,15 @@ us-east-1: ami-1234567890xyz
 
 ### Create an EC2 Instance Key Pair
 
-All instances of the COS will need to be accessed via ssh. So, during deployment an AWS instance key pair will be required.
+All instances of the Container Orchestration System will need to be accessed via ssh. So, during deployment an AWS instance key pair will be required.
 This key can be created with the the name `cos-playground` for this example.
 
 How to create a key pair is described at Creating a [Key Pair Using Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair).
 
 
-### Deploy the COS
+### Deploy the Container Orchestration System
 
-For the deployment the `examples/root-example` will be used. It is self contained and builds not only the COS itself, but also the underlying networking infrastructure.
+For the deployment the `examples/root-example` will be used. It is self contained and builds not only the Container Orchestration System itself, but also the underlying networking infrastructure.
 
 In this step you need the id of the AMI that was previously created and the name of your AWS profile. In our example the AMI id is `ami-1234567890xyz` and the profile is named `my_cos_account`.
 
@@ -296,7 +296,7 @@ terraform plan                                  \
   -var 'nomad_ami_id_clients=ami-1234567890xyz' \
   -out cos.plan
 
-# apply the planned changes, which means deploy the COS
+# apply the planned changes, which means deploy the Container Orchestration System
 terraform apply cos.plan
 
 After successful deployment terraform prints some useful parameters to the terminal.
