@@ -184,12 +184,12 @@ sudo ln -s /opt/nomad/0.8.6/nomad nomad
 
 ```bash
 cd ~/Downloads
-unzip packer_1.3.3_linux_amd64.zip
-sudo mkdir -p /opt/packer/1.3.3
-sudo mv packer /opt/packer/1.3.3
+unzip packer_1.3.5_linux_amd64.zip
+sudo mkdir -p /opt/packer/1.3.5
+sudo mv packer /opt/packer/1.3.5
 
 cd /usr/bin
-sudo ln -s /opt/packer/1.3.3/packer packer
+sudo ln -s /opt/packer/1.3.5/packer packer
 ```
 
  - Test it with `packer --version`
@@ -216,7 +216,7 @@ The following steps will be required:
 
 ```bash
 # Create work folder
-mkdir ~/example-cos/ && cd ~/example-cos/
+mkdir  && cd
 
 # Clone the code using tag v0.0.3
 git clone --branch v1.0.0 https://github.com/ehime/terraform-cos .
@@ -250,7 +250,7 @@ export AWS_DEFAULT_REGION=eu-central-1
 To build the AMI you just issue the following commands:
 
 ```bash
-cd ~/example-cos/modules/ami2
+cd modules/ami2
 
 # build the ami
 packer build                      \
@@ -267,6 +267,7 @@ Build 'amazon-linux-ami2' finished.
 
 ==> Builds finished. The artifacts of successful builds are:
 --> amazon-linux-ami2: AMIs were created:
+
 eu-central-1: ami-1234567890xyz
 ```
 
@@ -287,7 +288,7 @@ In this step you need the id of the AMI that was previously created and the name
 
 
 ```bash
-cd ~/example-cos/examples/root-example
+cd examples/root-example
 
 # Init terraform, download pugins and modules
 terraform init
@@ -313,3 +314,14 @@ These can be used to open the nomad UI `xdg-open "http://$(terraform output noma
 ![The Nomad UI](assets/nomad-ui.png)
 
 The image above shows the web UI of the empty, but running nomad cluster.
+
+
+### Deploying Fabio
+
+Now having an empty system up and running the last missing part to complete the Container Orchestration System setup, is fabio as the ingress traffic controller. Fabio will be deployed as the first nomad job.
+
+To interact with the nomad server you can make use of the nomad CLI locally installed on your computer. First you have to specify where the nomad CLI can find the nomad server by setting the environment variable NOMAD_ADDR appropriately.
+This can be done by calling cd cos/examples/root-example && export NOMAD_ADDR=http://$(terraform output nomad_ui_alb_dns).
+With nomad server members you should now get a list of three nomad servers, one of them elected as leader.
+
+The nomad job description for deploying fabio is located at cos/examples/jobs/fabio.nomad. It will roll out the raw binary of the reverse proxy, thus no docker job yet.
