@@ -60,7 +60,7 @@ At least three instances (a cluster quorum) with the Nomad binary in **server mo
 
 Instances with the nomad binary in **client mode**, will be the nodes where the actual jobs are deployed and ran. In the image above these nodes are indicated by the smaller boxes.
 
-Nomad also provides a feature called federation, which enables the option of connecting different Nomad clusters. Having this implemented the system can orchestrate and manage services across multiple data centers, which even can be hosted by different cloud providers. Indicated by the bold purple line in the architecural diagram, the Nomad leader of _Data-Center A (aka, eu-central-1)_ communicates with the leader in _Data-Center B (aka, us-east-2)_ using [Serf](https://www.serf.io/) (A lightweight gossip protocol).
+Nomad also provides a feature called federation, which enables the option of connecting different Nomad clusters. Having this implemented the system can orchestrate and manage services across multiple data centers, which even can be hosted by different cloud providers. Indicated by the bold purple line in the architecural diagram, the Nomad leader of _Data-Center A (aka, eu-central-1)_ communicates with the leader in _Data-Center B (aka, eu-central-2)_ using [Serf](https://www.serf.io/) (A lightweight gossip protocol).
 
 
 ### Service Discovery
@@ -320,8 +320,11 @@ The image above shows the web UI of the empty, but running nomad cluster.
 
 Now having an empty system up and running the last missing part to complete the Container Orchestration System setup, is fabio as the ingress traffic controller. Fabio will be deployed as the first nomad job.
 
-To interact with the nomad server you can make use of the nomad CLI locally installed on your computer. First you have to specify where the nomad CLI can find the nomad server by setting the environment variable NOMAD_ADDR appropriately.
-This can be done by calling cd cos/examples/root-example && export NOMAD_ADDR=http://$(terraform output nomad_ui_alb_dns).
+To interact with the nomad server you can make use of the nomad CLI locally installed on your computer. First you have to specify where the nomad CLI can find the nomad server by setting the environment variable `NOMAD_ADDR` appropriately.
+This can be done by calling `cd examples/root-example && export NOMAD_ADDR=http://$(terraform output nomad_ui_alb_dns)`.
 With nomad server members you should now get a list of three nomad servers, one of them elected as leader.
 
-The nomad job description for deploying fabio is located at cos/examples/jobs/fabio.nomad. It will roll out the raw binary of the reverse proxy, thus no docker job yet.
+The nomad job description for deploying fabio is located at `examples/jobs/fabio.nomad`. It will roll out the raw binary of the reverse proxy, thus no docker job yet.
+
+
+```hcl
