@@ -322,7 +322,7 @@ Now having an empty system up and running the last missing part to complete the 
 
 To interact with the nomad server you can make use of the nomad CLI locally installed on your computer. First you have to specify where the nomad CLI can find the nomad server by setting the environment variable `NOMAD_ADDR` appropriately.
 This can be done by calling `cd examples/root-example && export NOMAD_ADDR=http://$(terraform output nomad_ui_alb_dns)`.
-With nomad server members you should now get a list of three nomad servers, one of them elected as leader.
+With `nomad server members` you should now get a list of three nomad servers, one of them elected as leader.
 
 The nomad job description for deploying fabio is located at `examples/jobs/fabio.nomad`. It will roll out the raw binary of the reverse proxy, thus no docker job yet.
 
@@ -366,3 +366,8 @@ job "fabio" {
   }
 }
 ```
+
+With nomad run `examples/jobs/fabio.nomad`, fabio will be deployed to nomad to complete the COS setup.
+To test if the deployment succeeded you can either open the fabio UI using `xdg-open "http://$(terraform output fabio_ui_alb_dns)"` or check the nomad UI.
+
+![Fabio as the first Nomad Job](assets/fabio-jobs.png)
