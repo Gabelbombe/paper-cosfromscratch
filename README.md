@@ -386,3 +386,5 @@ Looking at consul one can see that beside, consul, nomad, nomad-clients and fabi
 Each instance of the service runs in one of the four data centers of the Container Orchestration System, in `public-services`, `private-services`, `content-connector` or `backoffice data center`. More details about the available data centers can be found in the [Container Orchestration System Architecture](https://github.com/ehime/terraform-cos).
 
 ![Consul Services](assets/consul-services.png)
+
+Side note: As you can see in the image, the tag `urlprefix-/ping` was added for the ping-service. This tag is needed to tell fabio to which service he should route all requests that hit the endpoint `/ping`. More details about this can be found at [fabio quickstart](https://fabiolb.net/quickstart/).
