@@ -60,7 +60,7 @@ At least three instances (a cluster quorum) with the Nomad binary in **server mo
 
 Instances with the nomad binary in **client mode**, will be the nodes where the actual jobs are deployed and ran. In the image above these nodes are indicated by the smaller boxes.
 
-Nomad also provides a feature called federation, which enables the option of connecting different Nomad clusters. Having this implemented the system can orchestrate and manage services across multiple data centers, which even can be hosted by different cloud providers. Indicated by the bold purple line in the architecural diagram, the Nomad leader of _Data-Center A (aka, eu-central-1)_ communicates with the leader in _Data-Center B (aka, eu-central-2)_ using [Serf](https://www.serf.io/) (A lightweight gossip protocol).
+Nomad also provides a feature called federation, which enables the option of connecting different Nomad clusters. Having this implemented the system can orchestrate and manage services across multiple data centers, which even can be hosted by different cloud providers. Indicated by the bold purple line in the architecural diagram, the Nomad leader of _Data-Center A (aka, eu-west-1)_ communicates with the leader in _Data-Center B (aka, eu-west-2)_ using [Serf](https://www.serf.io/) (A lightweight gossip protocol).
 
 
 ### Service Discovery
@@ -244,7 +244,7 @@ For now, I'll just be setting them in a shell by exporting the following paramet
 # AWS Environment Variables
 export AWS_ACCESS_KEY_ID=<your access key id>
 export AWS_SECRET_ACCESS_KEY=<your secret key>
-export AWS_DEFAULT_REGION=eu-central-1
+export AWS_DEFAULT_REGION=eu-west-1
 ```
 
 To build the AMI you just issue the following commands:
@@ -254,8 +254,8 @@ cd modules/ami2
 
 # build the ami
 packer build                      \
-  -var 'aws_region=eu-central-1'  \
-  -var 'ami_regions=eu-central-1' \
+  -var 'aws_region=eu-west-1'  \
+  -var 'ami_regions=eu-west-1' \
 nomad-consul-docker.json
 ```
 
@@ -268,7 +268,7 @@ Build 'amazon-linux-ami2' finished.
 ==> Builds finished. The artifacts of successful builds are:
 --> amazon-linux-ami2: AMIs were created:
 
-eu-central-1: ami-1234567890xyz
+eu-west-1: ami-1234567890xyz
 ```
 
 
@@ -388,3 +388,14 @@ Each instance of the service runs in one of the four data centers of the Contain
 ![Consul Services](assets/consul-services.png)
 
 **Side note:** As you can see in the image, the tag `urlprefix-/ping` was added for the ping-service. This tag is needed to tell fabio to which service he should route all requests that hit the endpoint `/ping`. More details about this can be found at [fabio quickstart](https://fabiolb.net/quickstart/).
+
+To test if the ping-service was deployed correctly, if he can find the other instances using the consul catalogue API and if fabio is able to route a request to a ping-service instance, you just have to send a GET request against the `/ping` endpoint.
+
+
+```bash
+# Obtain DNS name of the ingress ALB
+export IGRESS_ALB=http://$(terraform output ingress_alb_dns)
+
+# Send the test request once against the ping-service running in the COS
+curl $IGRESS_ALB/ping
+```
