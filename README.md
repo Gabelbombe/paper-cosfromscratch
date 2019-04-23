@@ -432,5 +432,5 @@ terraform destroy -var 'deploy_profile=my_cos_account'
 
 # clean up workspace
 terraform workspace select default
-terraform workspace delete -f cos_playground
+terraform workspace delete -force cos_playground
 ```
