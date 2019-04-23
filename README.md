@@ -312,7 +312,7 @@ After successful deployment terraform prints some useful parameters to the termi
 
 ![Successful Terraform Plan](assets/plan-success.png)
 
-These can be used to open the nomad UI `xdg-open "http://$(terraform output nomad_ui_alb_dns)"` or the consul UI `xdg-open "http://$(terraform output consul_ui_alb_dns)"` in your browser.
+These can be used to open the nomad UI `xdg-open "http://$(terraform output nomad_ui_alb_dns)"` or the consul UI `xdg-open "http://$(terraform output consul_ui_alb_dns)"` in your browser. (**Note:** For OSX you can just use the `open` command as we don't have `xdg`)
 
 ![The Nomad UI](assets/nomad-ui.png)
 
