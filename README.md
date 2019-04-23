@@ -290,11 +290,14 @@ In this step you need the id of the AMI that was previously created and the name
 ```bash
 cd ../examples/root-example
 
+# Create a new workspace to operate in
+terraform workspace new cos_playground
+
 # Init terraform, download pugins and modules
 terraform init
 
-# generic terraform plan call
-# terraform plan -out cos.plan -var deploy_profile=<your profile name> -var nomad_ami_id_servers=<your ami-id> -var nomad_ami_id_clients=<your ami-id>
+# A generic terraform plan call
+# terraform plan -var nomad_ami_id_servers=<your ami-id> -var nomad_ami_id_clients=<your ami-id> -var deploy_profile=<your profile name>
 terraform plan                                  \
   -var 'nomad_ami_id_servers=ami-1234567890xyz' \
   -var 'nomad_ami_id_clients=ami-1234567890xyz' \
@@ -422,5 +425,11 @@ With terraform this is really easy. The following command will remove all infras
 
 ```bash
 cd examples/root-example
+
+# Destroy all infrastructure
 terraform destroy -var deploy_profile=my_cos_account
+
+# Clean up workspaces
+terraform workspace select default
+terraform workspace delete -f cos_playground
 ```
