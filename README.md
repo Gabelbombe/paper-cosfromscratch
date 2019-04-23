@@ -253,7 +253,7 @@ To build the AMI you just issue the following commands:
 cd modules/ami2
 
 # build the ami
-packer build                      \
+packer build                   \
   -var 'aws_region=eu-west-1'  \
   -var 'ami_regions=eu-west-1' \
 nomad-consul-docker.json
@@ -398,4 +398,29 @@ export IGRESS_ALB=http://$(terraform output ingress_alb_dns)
 
 # Send the test request once against the ping-service running in the COS
 curl $IGRESS_ALB/ping
+```
+
+As a result you get something like:
+
+```json
+{
+  "message": "/[private-services,v1]/[public-services,v1]/[content-connector,v1]/.../[content-connector,v1](PONG)",
+  "name": "private-services",
+  "version": "v1"
+}
+```
+
+The field `name` denotes the data center of the ping-service instance that was hit first by the request (hop number one). In the message field you can see how the request propagates through the deployed instances of the service. From the private-services, to public-services, to content-connector, ..., to finally stop after 10 hops with the PONG message.
+
+This test nicely shows that the service-discovery over consul and the request routing using fabio works as intended.
+
+
+### Tear down
+
+To avoid paying money for the AWS resources if you don’t use the COS any more you should tear it down.
+With terraform this is really easy. The following command will remove all infrastructure components from your AWS account, but only those you created with terraform in this how-to.
+
+```bash
+cd examples/root-example
+terraform destroy -var deploy_profile=my_cos_account
 ```
