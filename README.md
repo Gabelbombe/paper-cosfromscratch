@@ -290,21 +290,22 @@ In this step you need the id of the AMI that was previously created and the name
 ```bash
 cd ../examples/root-example
 
-# Create a new workspace to operate in
+# create a new workspace to operate in
 terraform workspace new cos_playground
 
-# Init terraform, download pugins and modules
+# init terraform, download pugins and modules
 terraform init
 
-# A generic terraform plan call
-# terraform plan -var nomad_ami_id_servers=<your ami-id> -var nomad_ami_id_clients=<your ami-id> -var deploy_profile=<your profile name>
-terraform plan                                  \
-  -var 'nomad_ami_id_servers=ami-1234567890xyz' \
-  -var 'nomad_ami_id_clients=ami-1234567890xyz' \
-  -var 'deploy_profile=my_cos_account'
+# a generic terraform plan call
+# terraform plan -var nomad_ami_id_servers=<your ami-id> -var nomad_ami_id_clients=<your ami-id> -var deploy_profile=<your profile name> -out container-system.plan
+terraform plan                                      \
+  -var 'nomad_ami_id_servers=ami-02abc3480d8ecc9b7' \
+  -var 'nomad_ami_id_clients=ami-02abc3480d8ecc9b7' \
+  -var 'deploy_profile=my_cos_account'              \
+-out container-system.plan
 
 # apply the planned changes, which means deploy the Container Orchestration System
-terraform apply -auto-approve
+terraform apply container-system.plan -auto-approve
 ```
 
 After successful deployment terraform prints some useful parameters to the terminal.
@@ -426,10 +427,10 @@ With terraform this is really easy. The following command will remove all infras
 ```bash
 cd examples/root-example
 
-# Destroy all infrastructure
-terraform destroy -var deploy_profile=my_cos_account
+# destroy all infrastructure
+terraform destroy -var 'deploy_profile=my_cos_account'
 
-# Clean up workspaces
+# clean up workspace
 terraform workspace select default
 terraform workspace delete -f cos_playground
 ```
