@@ -383,6 +383,6 @@ So now lets deploy the `ping-service` and send a request against it.
 By calling nomad run `examples/jobs/ping_service.nomad` four instances of the `ping-service` will be deployed to the Container Orchestration System.
 Looking at consul one can see that beside, consul, nomad, nomad-clients and fabio also the `ping-service` is automatically registered by nomad. Thus the four deployed `ping-service` instances can be found via service discovery.
 
-Each instance of the service runs in one of the four data centers of the Container Orchestration System, in `public-services`, `private-services`, `content-connector` or `backoffice data center`. More details about the available data centers can be found at [Container Orchestration System Architecture](assets/cos-outline.png).
+Each instance of the service runs in one of the four data centers of the Container Orchestration System, in `public-services`, `private-services`, `content-connector` or `backoffice data center`. More details about the available data centers can be found in the [Container Orchestration System Architecture](https://github.com/ehime/terraform-cos).
 
 ![Consul Services](assets/consul-services.png)
