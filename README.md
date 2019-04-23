@@ -25,7 +25,7 @@ All of these technologies have their advantages, disadvantages and of course a d
 These problems have vanished with AWS EKS, but since this service is relatively new there are important features that are missing. Additionally, and even more importantly, with AWS EKS you lose the option to run a hybrid multi-IaaS provider platform. With the abstraction you've gained by using containers there is lot of potential in offloading components on cheaper platforms like Microsoft Azure or even regional data centers. Thus looking at the costs it is a good idea to keep this option.
 
 
-### Nomad as Core Component
+### Nomad as a Core-component
 
 After looking at the mentioned Container Orchestration Systems there is one I would like to focus on, this is other product called [Nomad](https://www.nomadproject.io/). **Nomad is a scheduler of applications and services no more, no less.** Nomad can't, or should it compete with the feature sets provided by kubernetes or DC/OS. All the important features for managing and running services are available. It does _just_ one job but does it extremely well.
 
@@ -216,7 +216,7 @@ The following steps will be required:
 
 ```bash
 # Create work folder
-mkdir  && cd
+mkdir -p cos-example && cd $_
 
 # Clone the code using tag v0.0.3
 git clone --branch v1.0.0 https://github.com/ehime/terraform-cos .
@@ -296,13 +296,12 @@ terraform init
 # generic terraform plan call
 # terraform plan -out cos.plan -var deploy_profile=<your profile name> -var nomad_ami_id_servers=<your ami-id> -var nomad_ami_id_clients=<your ami-id>
 terraform plan                                  \
-  -var 'deploy_profile=my_cos_account'          \
   -var 'nomad_ami_id_servers=ami-1234567890xyz' \
   -var 'nomad_ami_id_clients=ami-1234567890xyz' \
-  -out cos.plan
+  -var 'deploy_profile=my_cos_account'
 
 # apply the planned changes, which means deploy the Container Orchestration System
-terraform apply cos.plan
+terraform apply -auto-approve
 ```
 
 After successful deployment terraform prints some useful parameters to the terminal.
@@ -385,3 +384,5 @@ By calling nomad run `examples/jobs/ping_service.nomad` four instances of the `p
 Looking at consul one can see that beside, consul, nomad, nomad-clients and fabio also the `ping-service` is automatically registered by nomad. Thus the four deployed `ping-service` instances can be found via service discovery.
 
 Each instance of the service runs in one of the four data centers of the Container Orchestration System, in `public-services`, `private-services`, `content-connector` or `backoffice data center`. More details about the available data centers can be found at [Container Orchestration System Architecture](assets/cos-outline.png).
+
+![Consul Services](assets/consul-services.png)
