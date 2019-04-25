@@ -370,12 +370,12 @@ job "fabio" {
 }
 ```
 
-With nomad run `examples/jobs/fabio.nomad`, fabio will be deployed to nomad to complete the Container Orchestration System setup.
-To test if the deployment succeeded you can either open the fabio UI using `xdg-open "http://$(terraform output fabio_ui_alb_dns)"` or check the nomad UI.
+With `nomad run examples/jobs/fabio.nomad`, Fabio will be deployed to nomad to complete the Container Orchestration System setup.
+To test if the deployment succeeded you can either open the fabio UI using `xdg-open "http://$(terraform output fabio_ui_alb_dns)"` or check the Nomad UI.
 
 ![Fabio as the first Nomad Job](assets/fabio-jobs.png)
 
-In the image above, fabio running as nomad system job is shown. Thus the deployment was successful.
+In the image above, Fabio running as nomad system job is shown. Thus the deployment was successful.
 
 ### Deploy a Sample Service
 
@@ -384,7 +384,7 @@ Also part of the Container Orchestration Sysgtems project at [Github](https://gi
 The `ping-service` is a simple service for testing purposes. When you send a request to it's endpoint, the service tries to forward this request to other instances of the `ping-service`. This is done for a defined number of hops or "pings". For each hop a "ping" is added to the response. The last receiver in the chain stops forwarding and adds a "pong" to concatenated message list.
 
 So now lets deploy the `ping-service` and send a request against it.
-By calling nomad run `examples/jobs/ping_service.nomad` four instances of the `ping-service` will be deployed to the Container Orchestration System.
+By calling `nomad run examples/jobs/ping_service.nomad` four instances of the `ping-service` will be deployed to the Container Orchestration System.
 Looking at consul one can see that beside, consul, nomad, nomad-clients and fabio also the `ping-service` is automatically registered by nomad. Thus the four deployed `ping-service` instances can be found via service discovery.
 
 Each instance of the service runs in one of the four data centers of the Container Orchestration System, in `public-services`, `private-services`, `content-connector` or `backoffice data center`. More details about the available data centers can be found in the [Container Orchestration System Architecture](https://github.com/ehime/terraform-cos).
