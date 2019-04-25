@@ -378,21 +378,21 @@ In the image above, Fabio running as nomad system job is shown. Thus the deploym
 
 ### Deploy a Sample Service
 
-Also part of the Container Orchestration Sysgtems project at [Github](https://github.com/ehime/terraform-cos) is a Nomad job description for deploying a sample service, the `ping-service`.
+Also part of the Container Orchestration Sysgtems project at [Github](https://github.com/ehime/terraform-cos) is a Nomad job description for deploying a sample service, the **ping-service**.
 
-The `ping-service` is a simple service for testing purposes. When you send a request to it's endpoint, the service tries to forward this request to other instances of the `ping-service`. This is done for a defined number of hops or "pings". For each hop a "ping" is added to the response. The last receiver in the chain stops forwarding and adds a "pong" to concatenated message list.
+The **ping-service** is a simple service for testing purposes. When you send a request to it's endpoint, the service tries to forward this request to other instances of the **ping-service**. This is done for a defined number of hops or "pings". For each hop a "ping" is added to the response. The last receiver in the chain stops forwarding and adds a "pong" to concatenated message list.
 
-So now lets deploy the `ping-service` and send a request against it.
-By calling `nomad run ../jobs/ping_service.nomad` four instances of the `ping-service` will be deployed to the Container Orchestration System.
-Looking at consul one can see that beside, consul, nomad, nomad-clients and fabio also the `ping-service` is automatically registered by nomad. Thus the four deployed `ping-service` instances can be found via service discovery.
+So now lets deploy the **ping-service** and send a request against it.
+By calling `nomad run ../jobs/ping_service.nomad` four instances of the **ping-service** will be deployed to the Container Orchestration System.
+Looking at consul one can see that beside, consul, nomad, nomad-clients and fabio also the **ping-service** is automatically registered by nomad. Thus the four deployed **ping-service** instances can be found via service discovery.
 
-Each instance of the service runs in one of the four data centers of the Container Orchestration System, in `public-services`, `private-services`, `content-connector` or `backoffice data center`. More details about the available data centers can be found in the [Container Orchestration System Architecture](https://github.com/ehime/terraform-cos).
+Each instance of the service runs in one of the four data centers of the Container Orchestration System, in **public-services**, **private-services**, **content-connector** or the **backoffice** data center. More details about the available data centers can be found in the [Container Orchestration System Architecture](https://github.com/ehime/terraform-cos).
 
 ![Consul Services](assets/consul-services.png)
 
-**Side note:** As you can see in the image, the tag `urlprefix-/ping` was added for the ping-service. This tag is needed to tell fabio to which service he should route all requests that hit the endpoint `/ping`. More details about this can be found at [fabio quickstart](https://fabiolb.net/quickstart/).
+**Side note:** As you can see in the image, the tag `urlprefix-/ping` was added for the **ping-service**. This tag is needed to tell fabio to which service he should route all requests that hit the endpoint `/ping`. More details about this can be found at [Fabio quickstart](https://fabiolb.net/quickstart/).
 
-To test if the ping-service was deployed correctly, if he can find the other instances using the consul catalogue API and if fabio is able to route a request to a ping-service instance, you just have to send a GET request against the `/ping` endpoint.
+To test if the **ping-service** was deployed correctly, if he can find the other instances using the consul catalogue API and if fabio is able to route a request to a **ping-service** instance, you just have to send a `GET` request against the `/ping` endpoint.
 
 
 ```bash
