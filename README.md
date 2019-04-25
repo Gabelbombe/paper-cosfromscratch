@@ -219,7 +219,7 @@ The following steps will be required:
 mkdir -p cos-example && cd $_
 
 # Clone the code using tag v0.0.3
-git clone --branch v1.0.0 https://github.com/ehime/terraform-cos .
+git clone --branch v1.0.1 https://github.com/ehime/terraform-cos .
 ```
 
 
@@ -312,7 +312,7 @@ After successful deployment terraform prints some useful parameters to the termi
 
 ![Successful Terraform Plan](assets/plan-success.png)
 
-These can be used to open the nomad UI `xdg-open "http://$(terraform output nomad_ui_alb_dns)"` or the consul UI `xdg-open "http://$(terraform output consul_ui_alb_dns)"` in your browser. (**Note:** For OSX you can just use the `open` command as we don't have `xdg`)
+These can be used to open the Nomad UI `xdg-open "http://$(terraform output nomad_ui_alb_dns)"` or the Consul UI `xdg-open "http://$(terraform output consul_ui_alb_dns)"` in your browser. (**Note:** For OSX you can just use the `open` command as we don't have `xdg`)
 
 ![The Nomad UI](assets/nomad-ui.png)
 
